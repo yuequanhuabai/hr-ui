@@ -10,9 +10,7 @@ const baseApi = import.meta.env.VITE_APP_BASE_API
     <p>環境標題：{{ title }}</p>
     <p>API 基礎路徑：{{ baseApi }}</p>
 
-    <el-button type="primary" @click="count++">
-      Element Plus 計數器：{{ count }}
-    </el-button>
+    <el-button type="primary" @click="count++"> Element Plus 計數器：{{ count }} </el-button>
 
     <el-divider />
 
