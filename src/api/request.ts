@@ -24,13 +24,23 @@ service.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
+    console.log(
+      '[HTTP →]',
+      config.method?.toUpperCase(),
+      (config.baseURL || '') + (config.url || ''),
+      { params: config.params, data: config.data, headers: config.headers }
+    )
     return config
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    console.error('[HTTP → ✗]', error)
+    return Promise.reject(error)
+  }
 )
 
 service.interceptors.response.use(
   (response: AxiosResponse<ApiResponse>) => {
+    console.log('[HTTP ←]', response.config.url, response.status, response.data)
     const { code, msg, data } = response.data
 
     if (code === BUSINESS_OK) {
@@ -46,6 +56,7 @@ service.interceptors.response.use(
     return Promise.reject(new Error(msg || 'Error'))
   },
   (error) => {
+    console.error('[HTTP ✗]', error.config?.url, error.response?.status, error.response?.data || error.message)
     const status = error.response?.status
     const msg = error.response?.data?.msg || error.message || '網絡錯誤'
 
