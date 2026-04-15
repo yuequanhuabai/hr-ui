@@ -27,12 +27,15 @@ export const staticRoutes: RouteRecordRaw[] = [
   },
   {
     path: '/',
-    redirect: '/dashboard'
-  },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import('@/views/dashboard/index.vue'),
-    meta: { title: '首頁' }
+    component: () => import('@/layout/index.vue'),
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index.vue'),
+        meta: { title: '首頁' }
+      }
+    ]
   }
 ]
