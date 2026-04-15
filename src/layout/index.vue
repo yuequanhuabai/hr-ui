@@ -4,6 +4,7 @@ import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
 import { useRouter } from 'vue-router'
 import AppMain from './components/AppMain.vue'
+import Sidebar from './components/Sidebar/index.vue'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
@@ -26,10 +27,7 @@ async function handleLogout() {
   <el-container class="layout">
     <el-aside class="layout-aside" :width="asideWidth">
       <div class="logo">{{ collapsed ? 'HR' : '人事管理系統' }}</div>
-      <div class="sidebar-placeholder">
-        <p>Sidebar 佔位</p>
-        <p style="font-size: 12px; opacity: 0.6">Step 8 替換</p>
-      </div>
+      <Sidebar />
     </el-aside>
 
     <el-container>
