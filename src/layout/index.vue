@@ -4,6 +4,7 @@ import { useAppStore } from '@/store/modules/app'
 import AppMain from './components/AppMain.vue'
 import Sidebar from './components/Sidebar/index.vue'
 import Navbar from './components/Navbar.vue'
+import TagsView from './components/TagsView.vue'
 
 const appStore = useAppStore()
 
@@ -20,7 +21,7 @@ const asideWidth = computed(() => (collapsed.value ? '64px' : '210px'))
 
     <el-container>
       <Navbar />
-      <div class="tags-view-placeholder">TagsView 佔位（Step 10）</div>
+      <TagsView />
       <AppMain />
     </el-container>
   </el-container>
@@ -44,12 +45,5 @@ const asideWidth = computed(() => (collapsed.value ? '64px' : '210px'))
   font-weight: 600;
   background: #2b3a4a;
   white-space: nowrap;
-}
-.tags-view-placeholder {
-  background: #fff;
-  border-bottom: 1px solid #e4e7ed;
-  padding: 6px 16px;
-  font-size: 12px;
-  color: #909399;
 }
 </style>

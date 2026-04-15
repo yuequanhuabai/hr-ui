@@ -1,0 +1,22 @@
+@use './reset.scss';
+
+// 全局滾動條（Webkit/Blink 內核）
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #c0c4cc;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #909399;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+// 防止頁面切換過渡時出現橫向滾動條閃爍
+.app-main {
+  position: relative;
+}
