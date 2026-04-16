@@ -43,12 +43,19 @@ export interface SysDept {
   deptId: number
   parentId: number
   deptName: string
+  ancestors?: string
   orderNum?: number
   leader?: string
   phone?: string
   email?: string
   status?: number
   children?: SysDept[]
+  createTime?: string
+}
+
+export interface SysDeptQuery {
+  deptName?: string
+  status?: number | null
 }
 
 export interface SysRole {
