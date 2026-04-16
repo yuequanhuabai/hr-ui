@@ -78,12 +78,19 @@ export interface SysRoleQuery extends PageQuery {
 }
 
 export interface SysPost {
-  postId: number
-  postCode: string
-  postName: string
-  postSort?: number
+  postId?: number
+  postCode?: string
+  postName?: string
+  orderNum?: number
   status?: number
   remark?: string
+  createTime?: string
+}
+
+export interface SysPostQuery extends PageQuery {
+  postCode?: string
+  postName?: string
+  status?: number | null
 }
 
 export interface SysMenu {
