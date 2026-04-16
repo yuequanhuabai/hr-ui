@@ -19,7 +19,7 @@ const asideWidth = computed(() => (collapsed.value ? '64px' : '210px'))
       <Sidebar />
     </el-aside>
 
-    <el-container>
+    <el-container direction="vertical" class="layout-main">
       <Navbar />
       <TagsView />
       <AppMain />
@@ -35,6 +35,12 @@ const asideWidth = computed(() => (collapsed.value ? '64px' : '210px'))
   background: #304156;
   color: #bfcbd9;
   transition: width 0.2s;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.layout-main {
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
 }
 .logo {
