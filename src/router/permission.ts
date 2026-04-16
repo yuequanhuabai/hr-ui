@@ -5,10 +5,13 @@ import { useUserStore } from '@/store/modules/user'
 import { getToken } from '@/utils/auth'
 import { getRouters } from '@/api/auth'
 import { generateRoutes, NOT_FOUND_ROUTE } from '@/utils/dynamicRoutes'
+import NProgress from '@/utils/nprogress'
 
 const WHITE_LIST = ['/login', '/404', '/401']
+const APP_TITLE = 'HR 管理系統'
 
 router.beforeEach(async (to, _from, next) => {
+  NProgress.start()
   const hasToken = !!getToken()
 
   if (hasToken) {
@@ -59,8 +62,14 @@ router.beforeEach(async (to, _from, next) => {
   next(`/login?redirect=${to.fullPath}`)
 })
 
-router.afterEach(() => {
-  // hook point for NProgress / title update (Step 27)
+router.afterEach((to) => {
+  NProgress.done()
+  const title = (to.meta?.title as string) || ''
+  document.title = title ? `${title} - ${APP_TITLE}` : APP_TITLE
+})
+
+router.onError(() => {
+  NProgress.done()
 })
 
 export function removeDynamicRoutes(): void {

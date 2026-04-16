@@ -20,3 +20,12 @@
 .app-main {
   position: relative;
 }
+
+// NProgress 頂部進度條（覆蓋默認藍）
+#nprogress .bar {
+  background: #409eff !important;
+  height: 2px !important;
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px #409eff, 0 0 5px #409eff !important;
+}

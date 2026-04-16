@@ -6,12 +6,24 @@ import axios, {
 } from 'axios'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getToken, removeToken } from '@/utils/auth'
+import NProgress from '@/utils/nprogress'
 import type { ApiResponse } from './types/common'
 
 const BUSINESS_OK = 200
 const HTTP_UNAUTHORIZED = 401
 
+let pendingCount = 0
 let isReloginPrompting = false
+
+function startProgress() {
+  if (pendingCount === 0) NProgress.start()
+  pendingCount++
+}
+
+function doneProgress() {
+  pendingCount = Math.max(0, pendingCount - 1)
+  if (pendingCount === 0) NProgress.done()
+}
 
 const service: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -20,6 +32,7 @@ const service: AxiosInstance = axios.create({
 
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    startProgress()
     const token = getToken()
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
@@ -33,6 +46,7 @@ service.interceptors.request.use(
     return config
   },
   (error) => {
+    doneProgress()
     console.error('[HTTP → ✗]', error)
     return Promise.reject(error)
   }
@@ -40,6 +54,7 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response: AxiosResponse<ApiResponse>) => {
+    doneProgress()
     console.log('[HTTP ←]', response.config.url, response.status, response.data)
     const { code, msg, data } = response.data
 
@@ -56,6 +71,7 @@ service.interceptors.response.use(
     return Promise.reject(new Error(msg || 'Error'))
   },
   (error) => {
+    doneProgress()
     console.error('[HTTP ✗]', error.config?.url, error.response?.status, error.response?.data || error.message)
     const status = error.response?.status
     const msg = error.response?.data?.msg || error.message || '網絡錯誤'
