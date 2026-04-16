@@ -2,46 +2,42 @@
 import { ref, watch } from 'vue'
 import type { ElTree } from 'element-plus'
 
-interface DeptNode {
-  id: number | string
-  label: string
-  children?: DeptNode[]
-}
-
 const props = withDefaults(
   defineProps<{
-    data: DeptNode[]
+    data: any[]
     title?: string
     expandAll?: boolean
+    nodeKey?: string
+    labelKey?: string
+    childrenKey?: string
   }>(),
   {
     title: '部門列表',
-    expandAll: true
+    expandAll: true,
+    nodeKey: 'id',
+    labelKey: 'label',
+    childrenKey: 'children'
   }
 )
 
 const emit = defineEmits<{
-  (e: 'nodeClick', node: DeptNode): void
+  (e: 'nodeClick', node: any): void
 }>()
 
 const keyword = ref('')
 const treeRef = ref<InstanceType<typeof ElTree>>()
 
-const defaultProps = {
-  children: 'children',
-  label: 'label'
-}
-
 watch(keyword, (val) => {
   treeRef.value?.filter(val)
 })
 
-function filterNode(value: string, data: DeptNode) {
+function filterNode(value: string, data: any) {
   if (!value) return true
-  return data.label.includes(value)
+  const label = data[props.labelKey]
+  return typeof label === 'string' && label.includes(value)
 }
 
-function handleNodeClick(data: DeptNode) {
+function handleNodeClick(data: any) {
   emit('nodeClick', data)
 }
 </script>
@@ -56,11 +52,11 @@ function handleNodeClick(data: DeptNode) {
       ref="treeRef"
       class="dept-tree__body"
       :data="data"
-      :props="defaultProps"
+      :props="{ label: labelKey, children: childrenKey }"
       :default-expand-all="expandAll"
       :expand-on-click-node="false"
       :filter-node-method="filterNode"
-      node-key="id"
+      :node-key="nodeKey"
       highlight-current
       @node-click="handleNodeClick"
     />

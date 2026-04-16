@@ -1,27 +1,26 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-interface TreeNode {
-  id: number | string
-  label: string
-  children?: TreeNode[]
-  disabled?: boolean
-}
-
 const props = withDefaults(
   defineProps<{
     modelValue: number | string | null
-    data: TreeNode[]
+    data: any[]
     placeholder?: string
     clearable?: boolean
     checkStrictly?: boolean
     disabled?: boolean
+    nodeKey?: string
+    labelKey?: string
+    childrenKey?: string
   }>(),
   {
     placeholder: '請選擇',
     clearable: true,
     checkStrictly: true,
-    disabled: false
+    disabled: false,
+    nodeKey: 'id',
+    labelKey: 'label',
+    childrenKey: 'children'
   }
 )
 
@@ -38,11 +37,11 @@ const value = computed({
   }
 })
 
-const treeProps = {
-  value: 'id',
-  label: 'label',
-  children: 'children'
-}
+const treeProps = computed(() => ({
+  value: props.nodeKey,
+  label: props.labelKey,
+  children: props.childrenKey
+}))
 </script>
 
 <template>
@@ -55,7 +54,7 @@ const treeProps = {
     :check-strictly="checkStrictly"
     :disabled="disabled"
     :render-after-expand="false"
-    node-key="id"
+    :node-key="nodeKey"
     default-expand-all
     style="width: 100%"
   />
