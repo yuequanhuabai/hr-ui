@@ -4,10 +4,13 @@ import { useRouter } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
+import { usePermissionStore } from '@/store/modules/permission'
+import { removeDynamicRoutes } from '@/router/permission'
 import Breadcrumb from './Breadcrumb.vue'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
+const permissionStore = usePermissionStore()
 const router = useRouter()
 
 const collapsed = computed(() => appStore.sidebarCollapsed)
@@ -28,6 +31,8 @@ async function handleCommand(command: string) {
         type: 'warning'
       })
       await userStore.logout()
+      removeDynamicRoutes()
+      permissionStore.resetRoutes()
       router.push('/login')
     } catch {
       // 用戶取消
