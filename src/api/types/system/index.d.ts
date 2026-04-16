@@ -52,13 +52,22 @@ export interface SysDept {
 }
 
 export interface SysRole {
-  roleId: number
-  roleName: string
-  roleKey: string
-  roleSort?: number
+  roleId?: number
+  roleKey?: string
+  roleName?: string
   dataScope?: number
+  orderNum?: number
   status?: number
   remark?: string
+  menuIds?: number[]
+  deptIds?: number[]
+  createTime?: string
+}
+
+export interface SysRoleQuery extends PageQuery {
+  roleName?: string
+  roleKey?: string
+  status?: number | null
 }
 
 export interface SysPost {
@@ -68,4 +77,19 @@ export interface SysPost {
   postSort?: number
   status?: number
   remark?: string
+}
+
+export interface SysMenu {
+  menuId: number
+  parentId: number
+  menuName: string
+  menuType: 'M' | 'C' | 'F'
+  path?: string | null
+  component?: string | null
+  perms?: string | null
+  icon?: string | null
+  orderNum?: number
+  visible?: number
+  status?: number
+  children?: SysMenu[]
 }
