@@ -93,6 +93,13 @@ export interface SysPostQuery extends PageQuery {
   status?: number | null
 }
 
+export interface SysUserProfile {
+  user: SysUser
+  roleGroup?: string
+  postGroup?: string
+  deptName?: string
+}
+
 export interface SysMenu {
   menuId: number
   parentId: number
