@@ -191,7 +191,8 @@ function pruneSelf(nodes: SysMenu[], excludeId: number): SysMenu[] {
     }))
 }
 
-const menuTypeTag: Record<MenuType, string> = {
+type TagType = 'primary' | 'success' | 'warning' | 'info' | 'danger'
+const menuTypeTag: Record<MenuType, TagType> = {
   M: 'primary',
   C: 'success',
   F: 'warning'

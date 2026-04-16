@@ -191,7 +191,8 @@ async function customUpload(options: UploadRequestOptions) {
     profile.user.avatar = res.imgUrl
     ElMessage.success('頭像上傳成功')
   } catch (e) {
-    options.onError(e as Error)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    options.onError(e as any)
   }
 }
 

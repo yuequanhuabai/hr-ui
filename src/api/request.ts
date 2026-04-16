@@ -53,7 +53,7 @@ service.interceptors.request.use(
 )
 
 service.interceptors.response.use(
-  (response: AxiosResponse<ApiResponse>) => {
+  ((response: AxiosResponse<ApiResponse>) => {
     doneProgress()
     console.log('[HTTP ←]', response.config.url, response.status, response.data)
     const { code, msg, data } = response.data
@@ -69,7 +69,7 @@ service.interceptors.response.use(
 
     ElMessage.error(msg || '請求失敗')
     return Promise.reject(new Error(msg || 'Error'))
-  },
+  }) as unknown as (response: AxiosResponse) => AxiosResponse,
   (error) => {
     doneProgress()
     console.error('[HTTP ✗]', error.config?.url, error.response?.status, error.response?.data || error.message)

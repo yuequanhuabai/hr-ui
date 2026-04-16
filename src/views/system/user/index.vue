@@ -161,7 +161,7 @@ async function openEdit(row: SysUser) {
   const { user, roles } = await getUser(row.userId!)
   Object.assign(form, user)
   form.password = ''
-  form.roleIds = roles.map((r) => r.roleId)
+  form.roleIds = roles.map((r) => r.roleId!).filter((id): id is number => typeof id === 'number')
   dialogVisible.value = true
 }
 
@@ -429,7 +429,7 @@ onMounted(() => {
                   v-for="p in postOptions"
                   :key="p.postId"
                   :label="p.postName"
-                  :value="p.postId"
+                  :value="p.postId ?? 0"
                 />
               </el-select>
             </el-form-item>
@@ -447,7 +447,7 @@ onMounted(() => {
                   v-for="r in roleOptions"
                   :key="r.roleId"
                   :label="r.roleName"
-                  :value="r.roleId"
+                  :value="r.roleId ?? 0"
                 />
               </el-select>
             </el-form-item>

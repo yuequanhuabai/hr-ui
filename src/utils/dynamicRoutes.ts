@@ -40,24 +40,23 @@ function toRoute(menu: MenuItem): RouteRecordRaw {
   const isDirectory = menu.menuType === MENU_TYPE.DIRECTORY
   const component = isDirectory ? ParentView : resolveComponent(menu.component)
 
-  const route: RouteRecordRaw = {
+  const children: RouteRecordRaw[] = menu.children?.length
+    ? menu.children
+        .filter((c) => c.menuType !== MENU_TYPE.BUTTON)
+        .map((c) => toRoute(c))
+    : []
+
+  return {
     path,
     component,
     name: toPascalCaseName(rawPath) || `Menu${menu.menuId}`,
+    children,
     meta: {
       title: menu.menuName,
       icon: menu.icon || undefined,
       hidden: menu.visible === 1
     }
-  }
-
-  if (menu.children?.length) {
-    route.children = menu.children
-      .filter((c) => c.menuType !== MENU_TYPE.BUTTON)
-      .map((c) => toRoute(c))
-  }
-
-  return route
+  } as RouteRecordRaw
 }
 
 export function generateRoutes(menus: MenuItem[]): RouteRecordRaw[] {

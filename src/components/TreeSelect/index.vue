@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+type TreeValue = number | string | null | undefined
+
 const props = withDefaults(
   defineProps<{
-    modelValue: number | string | null
+    modelValue: TreeValue
     data: any[]
     placeholder?: string
     clearable?: boolean
@@ -25,8 +27,8 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: number | string | null): void
-  (e: 'change', value: number | string | null): void
+  (e: 'update:modelValue', value: TreeValue): void
+  (e: 'change', value: TreeValue): void
 }>()
 
 const value = computed({
