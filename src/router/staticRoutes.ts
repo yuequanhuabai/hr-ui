@@ -42,6 +42,18 @@ export const staticRoutes: RouteRecordRaw[] = [
         name: 'Profile',
         component: () => import('@/views/profile/index.vue'),
         meta: { title: '個人中心', hidden: true }
+      },
+      {
+        path: 'workflow/apply',
+        name: 'WorkflowApply',
+        component: () => import('@/views/workflow/apply/index.vue'),
+        meta: { title: '請假申請', icon: 'Edit' }
+      },
+      {
+        path: 'workflow/task',
+        name: 'WorkflowTask',
+        component: () => import('@/views/workflow/task/index.vue'),
+        meta: { title: '我的待辦', icon: 'Bell' }
       }
     ]
   }
